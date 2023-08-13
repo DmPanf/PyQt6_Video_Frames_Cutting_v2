@@ -13,4 +13,4 @@ This code defines a function darken_rgb_color that takes a HEX color value (e.g.
 3. Multiply the value (brightness) component of the HSV with the given factor to darken the color.
 4. Convert the modified HSV values back to RGB format.
 5. Convert the RGB values back to HEX format.
-. Return the darkened HEX color.
+6. Return the darkened HEX color.
