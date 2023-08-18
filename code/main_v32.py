@@ -1,3 +1,6 @@
+# Версия v.3.2 адаптирована под Windows 11, где не получалось сохранять атоматически файлы в латинице, 
+# а также был вылет окна за пределы границ экрана!
+
 import sys  # Импортируем модуль sys для получения аргументов командной строки
 from PyQt6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QHBoxLayout, QMessageBox, QGridLayout, 
                              QLabel, QSlider, QLineEdit, QPushButton, QFileDialog)
