@@ -157,13 +157,20 @@ class VideoApp(QWidget):
         self.show()
 
 
+#    def center(self):
+#        screen = QGuiApplication.screens()[0]
+#        screen_geometry = screen.availableGeometry()
+#        window_geometry = self.frameGeometry()
+#        window_geometry.moveCenter(screen_geometry.center())
+#        window_geometry.moveTop(window_geometry.top() - 100)
+#        self.move(window_geometry.topLeft())
+
     def center(self):
-        screen = QGuiApplication.screens()[0]
-        screen_geometry = screen.availableGeometry()
-        window_geometry = self.frameGeometry()
-        window_geometry.moveCenter(screen_geometry.center())
-        window_geometry.moveTop(window_geometry.top() - 100)
-        self.move(window_geometry.topLeft())
+      screen = QGuiApplication.screens()[0]  # Получаем объект первого экрана
+      screen_geometry = screen.geometry()    # Получаем геометрию всего экрана
+      window_geometry = self.frameGeometry() # Получаем геометрию окна приложения
+      window_geometry.moveCenter(screen_geometry.center()) # Позиционируем центр геометрии окна в центр экрана
+      self.move(window_geometry.topLeft())   # Перемещаем окно в соответствующую позицию
 
 
     def update_image(self):
