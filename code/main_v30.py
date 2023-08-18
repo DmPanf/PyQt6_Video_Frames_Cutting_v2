@@ -178,7 +178,7 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
         screen_geometry = screen.geometry()  # получаем геометрию экрана
         window_geometry = self.frameGeometry()  # получаем геометрию виджета
         window_geometry.moveCenter(screen_geometry.center())  # центрируем виджет
-        # window_geometry.moveTop(window_geometry.top() - 100)  # отступ от верха
+        window_geometry.moveTop(window_geometry.top() - 170)  # отступ от верха
         self.move(window_geometry.topLeft())  # перемещаем виджет
 
 
