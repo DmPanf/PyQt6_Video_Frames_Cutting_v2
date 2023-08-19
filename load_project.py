@@ -55,4 +55,4 @@ create_startup_script(PROJECT_PATH, VENV_PATH)
 # Первичный запуск main.py с использованием виртуального окружения
 subprocess.run([PYTHON_PATH, "main.py"])
 
-print(f'\n⚙️ Проект загружен в папку {PROJECT_DIR}, библиотеки установлены,\nдля последующего запуска можно использовать "tart_project.bat"!')
+print(f'\n⚙️ Проект загружен в папку {PROJECT_DIR}, библиотеки установлены,\nдля последующего запуска можно использовать "start_project.bat"!')
