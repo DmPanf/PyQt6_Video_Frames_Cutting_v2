@@ -1,10 +1,10 @@
-https://github.com/DmPanf/PyQt6_Video_Frames_Cutting_v2
-
+# https://github.com/DmPanf/PyQt6_Video_Frames_Cutting_v2
+# Ver.1.33 [08-2023]
 import os
 import subprocess
 
-REPO_URL = "https://github.com/ваш_логин/имя_репозитория.git"
-PROJECT_DIR = "имя_каталога_проекта"
+REPO_URL = "https://github.com/DmPanf/PyQt6_Video_Frames_Cutting_v2.git"
+PROJECT_DIR = "Video_CUT"
 VENV_NAME = "venv"
 
 # Клонирование репозитория
