@@ -229,10 +229,10 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
 
             # Ограничение размеров приложения максимальными высотой и шириной экрана монитора
             screen_size = QApplication.primaryScreen().size()  # Размер экрана
-            print(f'\nРазмер экрана {screen_size}')
+            ## print(f'\nРазмер экрана {screen_size}')
             screen_width = screen_size.width() - 20  # Максимальная ширина для отображения 
             screen_height = screen_size.height() - 80  # Максимальная высота для отображения
-            print(f'Размер: {screen_width}x{screen_height}\n')
+            ## print(f'Размер: {screen_width}x{screen_height}\n')
             self.setMaximumSize(QSize(screen_width, screen_height))  # Максимальная ширина и высота
             self.setMinimumSize(QSize(640, 500))  # Минимальная ширина и высота
             self.center()  # Центрируем окно с виджетами
