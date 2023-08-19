@@ -18,7 +18,7 @@ subprocess.run(["python", "-m", "venv", VENV_NAME])
 
 # Устанавливаем необходимые библиотеки
 pip_path = os.path.join(VENV_NAME, "bin", "pip")
-subprocess.run([pip_path, "install", "PyQt6", "opencv-python"])
+subprocess.run([pip_path, "install", "-r", "requirements.txt"])
 
 # Запускаем main.py с использованием виртуального окружения
 python_path = os.path.join(VENV_NAME, "bin", "python")
