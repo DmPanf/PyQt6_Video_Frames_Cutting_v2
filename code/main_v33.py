@@ -9,12 +9,12 @@ from PyQt6.QtGui import QPixmap, QGuiApplication, QImage  # Импортируе
 import cv2  # Импортируем модуль cv2 для работы с видео
 import os   # Импортируем модуль os для работы с файлами 
 import configparser  # Импортируем модуль configparser для работы с конфигурацией 
-import re
+import re  # Импортируем модуль re для работы с регулярными выражениями
 
-def is_valid_filename(filename: str) -> bool:
+def is_valid_filename(filename: str) -> bool:  # Функция проверки имени файла
     # Паттерн регулярного выражения для проверки на латинские буквы, цифры, дефисы и подчеркивания
-    pattern = r'^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9]+)?$'
-    return bool(re.match(pattern, filename))
+    pattern = r'^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9]+)?$'  # Регулярное выражение для проверки имени файла на наличие недопустимых символов
+    return bool(re.match(pattern, filename))  # Возвращаем результат проверки 
 
 def read_config():  # Функция чтения конфигурации
     config = configparser.ConfigParser()  # Создаем объект конфигурации
@@ -123,13 +123,15 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
         self.name_label.setStyleSheet("font-size: 16px;")
         # self.output_name.setStyleSheet("background-color: lightgray; width: 200px; font-size: 16px; color: darkgreen;")
         self.output_name.setStyleSheet(font_style)
+        self.output_name.editingFinished.connect(self.check_validity)  # Проверка валидности имени, когда пользователь переключается на другие виджеты !!!
+        #  Этот сигнал отправляется, когда поле QLineEdit теряет фокус (и, таким образом, редактирование завершено).
 
-        info_layout.addWidget(self.start_label)
-        info_layout.addWidget(self.current_frame_label)   # 
-        info_layout.addWidget(self.end_label)             # Добавляем QLineEdit
-        info_layout.addWidget(self.skip_frames)           # Строки "Начальное", "Текущее", "Конечное" добавляются в макет
-        info_layout.addWidget(self.name_label)            # Добавляем QLineEdit
-        info_layout.addWidget(self.output_name)           # Lейблы "Начальное", "Текущее", "Конечное" добавляются в макет 
+        info_layout.addWidget(self.start_label)           # Добавляем QLineEdit - Строка "Начало кадров"
+        info_layout.addWidget(self.current_frame_label)   # Текущий кадр
+        info_layout.addWidget(self.end_label)             # Добавляем QLineEdit - "Конечный кадр"
+        info_layout.addWidget(self.skip_frames)           # Добавляем QLineEdit - "Количество кадров"
+        info_layout.addWidget(self.name_label)            # Добавляем QLineEdit - "Название"
+        info_layout.addWidget(self.output_name)           # Шаблон имени сохраняемых ихображений и подкаталога
         layout.addLayout(info_layout)                     # Добавляем макет в основной макет
 
         # Button Panel
@@ -189,6 +191,13 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
         window_geometry.moveTop(window_geometry.top() - 170)  # отступ от верха
         self.move(window_geometry.topLeft())  # перемещаем виджет
 
+    def check_validity(self):  # Проверка валидности имени после переключения на другие виджеты !!!
+        text = self.output_name.text()  # Получаем текст
+        # Функция - метод проверки на валидность (например, с использованием регулярных выражений или других методов).
+        if not is_valid_filename(text):  # Проверяем имя файла на валидность
+            QMessageBox.warning(self, "Invalid input", "🤖 Необходимо ввести шаблон имен из допустимых символов (преимущественно для ОС Windows).")  # Выводим сообщение
+            self.output_name.setText("Video")  # Устанавливаем имя файла для сохранения в виджете в качестве дежурного "Video"
+
 
     def resizeEvent(self, event):  # обработчик события resize
         super().resizeEvent(event) # вызываем метод родительского класса
@@ -213,7 +222,7 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
             # Устанавливаем имя файла для сохранения 
             base_name = os.path.basename(self.video_path)  # Имя файла
             video_name_without_extension = os.path.splitext(base_name)[0]  # Имя без расширения
-            if is_valid_filename(video_name_without_extension):
+            if is_valid_filename(video_name_without_extension):  # Проверяем имя файла на валидность 
                 self.output_name.setText(video_name_without_extension)  # Устанавливаем имя файла для сохранения
             else:
                 self.output_name.setText("Video")  # Устанавливаем имя файла для сохранения
@@ -228,7 +237,7 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
             self.setMinimumSize(QSize(640, 500))  # Минимальная ширина и высота
             self.center()  # Центрируем окно с виджетами
             current_position = self.pos()  # Получаем позицию виджета
-            self.move(current_position.x(), current_position.y() + 190)  # Дополнительное смещение вниз на 190 пикселей
+            self.move(current_position.x(), current_position.y() + 170)  # Дополнительное смещение вниз на 170 пикселей
 
 
     def show_frame_on_label(self, frame):  # показать кадр на виджете
@@ -427,9 +436,10 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
         output_name_value = self.output_name.text().strip() # вместо video_name_without_extension
         if output_name_value and is_valid_filename(output_name_value):  # Если output_name задан и валидный
             video_name_without_extension = output_name_value # Убираем расширение
-            self.output_name.setText(video_name_without_extension) # Обновляем поле для Шаблона
+            # self.output_name.setText(video_name_without_extension) # Обновляем поле для Шаблона
         else:  # Если output_name не задан и содержит недопустиммые символы
             self.output_name.setText('Video') # Обновляем поле для Шаблона с дежурным названием видео (можно исправить или нажатать Reset)
+            video_name_without_extension = 'Video'  # Назначаем дежурное название для подкаталога и файлов изображений - фреймов видео
 
         save_path = os.path.join(self.frames_dir, video_name_without_extension)  # Получаем путь к папке с кадрами 
 
