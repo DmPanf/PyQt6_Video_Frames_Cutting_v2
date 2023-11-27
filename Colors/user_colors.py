@@ -1,3 +1,5 @@
+# Использование Jupyter Notebook
+
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import colorsys
