@@ -1,3 +1,4 @@
+# main.py
 import sys  # Импортируем модуль sys для получения аргументов командной строки
 from PyQt6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QHBoxLayout, QMessageBox, QGridLayout, 
                              QLabel, QSlider, QLineEdit, QPushButton, QFileDialog)
@@ -89,7 +90,6 @@ class VideoApp(QWidget):  # Класс виджета VideoApp
                 padding: 3px;
             }
         """)
-
 
         # Info Panel
         info_layout = QHBoxLayout()  # Основной макет для информации в горизонтальном режиме
